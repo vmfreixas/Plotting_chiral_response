@@ -19,7 +19,7 @@ def get_civecs_from_data(fileName, root):
                 row = [float(x) for x in line.split()]
                 matrix.append(row)
                 if i == Nocc:
-                    return matrix
+                    return np.array(matrix)
             if 'Root' in line and int(line.split()[1]) == root:
                 ciBlock = True
             if ciBlock and 'Nocc' in line:
