@@ -15,7 +15,7 @@ from get_electric_dipole_from_NWChem import get_electric_dipole_from_NWChem
 from get_magnetic_dipole_from_NWChem import get_magnetic_dipole_from_NWChem  
 
 nwFile = 'plot.out'
-dataFile = 'civecs.data'
+dataFile = 'civecs_2.data'
 
 #Reading MO matrix
 mo = get_MO_matrix_from_NWChem(nwFile)
@@ -40,7 +40,7 @@ print('Building dipolesT tensor')
 start = time.time()
 # With NumPy:
 Rij = np.einsum('ij,kl,ji,lk->ik', muxNP, mxNP, tdmNP, tdmNP) + np.einsum('ij,kl,ji,lk->ik', muyNP, myNP, tdmNP, tdmNP) + np.einsum('ij,kl,ji,lk->ik', muzNP, mzNP, tdmNP, tdmNP)
-np.savetxt('Rij.txt', Rij, fmt = '%.8f')
+np.savetxt('Rij_2_1.txt', Rij, fmt = '%.8f')
 
 # With Torch:
 #mux = torch.from_numpy(muxNP).float()

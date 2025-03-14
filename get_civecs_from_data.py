@@ -28,8 +28,8 @@ def get_civecs_from_data(fileName, root):
                 Nvir = int(line.split()[1])
                 read = True 
 
-fileName = 'civecs.data'
-root = 1
-civec = get_civecs_from_data(fileName, 19)
-np.savetxt('civec_1.txt', civec, fmt = '%.8f')
+#fileName = 'civecs_2.data'
+#root = 1
+#civec = get_civecs_from_data(fileName, 19)
+#np.savetxt('civecs_2.txt', civec, fmt = '%.8f')
 
