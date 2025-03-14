@@ -15,12 +15,16 @@ from get_electric_dipole_from_NWChem import get_electric_dipole_from_NWChem
 from get_magnetic_dipole_from_NWChem import get_magnetic_dipole_from_NWChem  
 from read_civecs import read_civecs
 from calc_moment_contrib import calc_moment_contrib
+from make_molden import make_molden
 
 # File names:
 dataFile = 'data_F_core'
 nwFile = 'plot.out'
 exeFile = 'read_civecs.x'
 civecsFile = 'civecs_2.data'
+xyzFile = 'geometry.xyz'
+templateFile = 'pbe0.molden'
+moldenFile = 'Rij_SVD_1.molden'
 
 # Snapshots:
 dirlist = []
@@ -88,6 +92,7 @@ for d in dirlist:
     [eleOrb, magOrb] = calc_moment_contrib(Rij, order)
 
     # Building a molden file
+    make_molden(dataFile + '/' + d + '/' + xyzFile, templateFile, [eleOrb, magOrb], dataFile + '/' + d + '/' + moldenFile)
 
     end = time.time()
     excecution_time = end - start

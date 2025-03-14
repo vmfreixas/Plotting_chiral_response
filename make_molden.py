@@ -8,25 +8,75 @@
 import numpy as np
 
 def read_xyz_make_first_molden_block(xyzFile):
-    angstrom = 1.0 / 0.529177 #AU
+    angstrom = 1.0 / 0.529177  # Conversion factor to atomic units
+    element_map = {'H': 1, 'C': 6, 'F': 9, 'Cl': 17}  # Atomic number mapping    
     with open(xyzFile, 'r') as xyzF:
         oLines = []
-        oLines.append('[Molden Format]\nAtoms AU\n')
-        i = 0
-        for line in xyzF:
-            i += 1
-            if i >= 3:
-                if 'H' in line:
-                    oLine = '\t' + line.split()[0] + '\t' + str(i - 2) + '\t1\t' + str(float(line.split()[1]) * angstrom) + '\t' + str(float(line.split()[2]) * angstrom) + '\t' + str(float(line.split()[3]) * angstrom) + '\n'
-                if 'C' in line:
-                    oLine = '\t' + line.split()[0] + '\t' + str(i - 2) + '\t6\t' + str(float(line.split()[1]) * angstrom) + '\t' + str(float(line.split()[2]) * angstrom) + '\t' + str(float(line.split()[3]) * angstrom) + '\n'
-                if 'F' in line:
-                    oLine = '\t' + line.split()[0] + '\t' + str(i - 2) + '\t9\t' + str(float(line.split()[1]) * angstrom) + '\t' + str(float(line.split()[2]) * angstrom) + '\t' + str(float(line.split()[3]) * angstrom) + '\n'
-                if 'Cl' in line:
-                    oLine = '\t' + line.split()[0] + '\t' + str(i - 2) + '\t17\t' + str(float(line.split()[1]) * angstrom) + '\t' + str(float(line.split()[2]) * angstrom) + '\t' + str(float(line.split()[3]) * angstrom) + '\n'
-                oLines.append(oLine)
+        oLines.append('[Molden Format]\n[Atoms] AU\n')
+        for i, line in enumerate(xyzF, start=-1):  # Start from -1 to skip first two lines
+            if i < 1:
+                continue  # Skip first two lines of XYZ file
+            parts = line.split()
+            element = parts[0]
+            index = i  # Adjust index to match required numbering
+            atomic_number = element_map.get(element, 0)  # Get atomic number, default to 0 if unknown
+            x, y, z = (float(parts[j]) * angstrom for j in range(1, 4))  # Convert coordinates
+            # Formatting to match the required output:
+            oLine = f"{element:>3} {index:>5} {atomic_number:>3} {x:>16.10f} {y:>16.10f} {z:>16.10f}\n"
+            oLines.append(oLine)
     return oLines
 
+def read_basis_block_from_template(moldenTemplate):
+    with open(moldenTemplate, 'r') as templateFile:
+        block2 = []
+        read = False
+        for line in templateFile:
+            if '[GTO]' in line:
+                read = True
+            if read:
+                block2.append(line)
+            if '[9G]' in line:
+                return block2
+
+def make_third_block(weights):
+    oLines = []
+    oLines.append('[MO]\nSym= a\nEne= -0.0\nSpin= Alpha\nOccup=        2.00000000000000\n')
+    for i, w in enumerate(weights, start=1):
+        oLines.append(f"{i:>6}    {w: .16f}\n")
+    return oLines
+
+def make_molden(xyzFile, templateFile, weights, moldenFile):
+    with open(xyzFile, 'r') as xyz:
+        i = 0
+        atoms = []
+        for line in xyz:
+            i += 1
+            if i >= 3:
+                atoms.append(line.split()[0])
+    with open(moldenFile, 'w') as moldenFile:
+        block1 = read_xyz_make_first_molden_block(xyzFile)
+        for lines in block1:
+            moldenFile.write(lines)
+        block2 = read_basis_block_from_template(templateFile)
+        for lines in block2:
+            moldenFile.write(lines)
+        for w in weights:
+            block3 = make_third_block(w)
+            for lines in block3:
+                moldenFile.write(lines)
+'''
+# Example of use:
+xyzFile = 'data_F_core/0000/geometry.xyz'
+templateFile = 'pbe0.molden'
+RijFile = 'data_F_core/0000/Rij_2_1.txt'
+Rij = np.loadtxt(RijFile)
+weights = np.diagonal(Rij)
+moldenFile = 'data_F_core/0000/Rij_SVD_1.molden'
+make_molden(xyzFile, templateFile, [weights, weights], moldenFile)
+'''
+    
+'''
+# Building basis block from basis file
 def read_basis_make_second_block(basisFile, atoms):
     basis = {}
     with open(basisFile, 'r') as bFile:
@@ -65,39 +115,4 @@ def read_basis_make_second_block(basisFile, atoms):
         atom_index += 1
         oLines.append('\n')
     return oLines
-
-def make_third_block(weights):
-    oLines = []
-    oLines.append('[MO]\nSym= a\nEne= -0.0\nSpin= Alpha\nOccup=        2.00000000000000\n')
-    i = 0
-    for w in weights:
-        i += 1
-        oLines.append(str(i) + '\t' + str(w) + '\n')
-    return oLines
-
-xyzFile = 'geometry.xyz'
-basisFile = 'helicene.basis'
-# Reading atoms 
-with open(xyzFile, 'r') as xyz:
-    i = 0
-    atoms = []
-    for line in xyz:
-        i += 1
-        if i >= 3:
-            atoms.append(line.split()[0])
-print(atoms)
-# Reading weights
-RijFile = 'Rij_2_1.txt'
-Rij = np.loadtxt(RijFile) 
-Rii = np.diag(Rij)
-
-with open('output.molden', 'w') as moldenFile:
-    block1 = read_xyz_make_first_molden_block(xyzFile)
-    for lines in block1:
-        moldenFile.write(lines)
-    block2 = read_basis_make_second_block(basisFile, atoms)
-    for lines in block2:
-        moldenFile.write(lines)
-    block3 = make_third_block(Rii)
-    for lines in block3:
-        moldenFile.write(lines)
+'''
