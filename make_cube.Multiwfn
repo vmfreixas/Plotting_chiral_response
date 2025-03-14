@@ -1,0 +1,7 @@
+200 # Other functions (Part 2)
+3   # Generate cube file for multiple orbital wavefunctions
+1,2 # Input orbital index
+1   # Low quality grid
+1   # Output the grid data of these orbitals as separate cube files
+0   # Return
+q   # Exit
