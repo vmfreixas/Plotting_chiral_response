@@ -38,6 +38,8 @@ def get_magnetic_dipole_from_NWChem(fileName, direction):
                 mBlock = True
                 i = -4
 
+'''
+# Example of use:
 filename = 'plot.out'
 direction = 'x'
 m_x = get_magnetic_dipole_from_NWChem(filename, direction)
@@ -52,5 +54,5 @@ filename = 'plot.out'
 direction = 'z'
 m_z = get_magnetic_dipole_from_NWChem(filename, direction)
 np.savetxt('m_z.txt', m_z, fmt = '%.8f')
-
+'''
 

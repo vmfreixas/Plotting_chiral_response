@@ -17,6 +17,8 @@ def calc_moment_contrib(Rij, order):
     first_right_singular_vector = Vt[order - 1, :]
     return [first_left_singular_vector, first_right_singular_vector]
 
+'''
+# Example of use
 RijFile = 'Rij_2_1.txt'
 Rij = np.loadtxt(RijFile)
 order = 1
@@ -25,4 +27,5 @@ order = 1
 
 np.savetxt('eleOrb.txt', eleOrb, fmt = '%.8f')
 np.savetxt('magOrb.txt', magOrb, fmt = '%.8f')
+'''
 

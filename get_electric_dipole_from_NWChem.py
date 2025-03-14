@@ -33,7 +33,8 @@ def get_electric_dipole_from_NWChem(fileName, direction):
             if 'mu_' + direction in line:
                 muBlock = True
                 i = -6
-
+'''
+# Exapmle of use
 filename = 'plot.out'
 direction = 'x'
 mu_x = get_electric_dipole_from_NWChem(filename, direction)
@@ -44,9 +45,8 @@ direction = 'y'
 mu_y = get_electric_dipole_from_NWChem(filename, direction)
 np.savetxt('mu_y.txt', mu_y, fmt = '%.8f')
 
-
 filename = 'plot.out'
 direction = 'z'
 mu_z = get_electric_dipole_from_NWChem(filename, direction)
 np.savetxt('mu_z.txt', mu_z, fmt = '%.8f')
-
+'''
