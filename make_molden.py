@@ -35,12 +35,13 @@ def read_basis_block_from_template(moldenTemplate):
                 read = True
             if read:
                 block2.append(line)
-            if '[9G]' in line:
+            if '[MO]' in line:
+                block2.append('\n')
                 return block2
 
 def make_third_block(weights):
     oLines = []
-    oLines.append('[MO]\nSym= a\nEne= -0.0\nSpin= Alpha\nOccup=        2.00000000000000\n')
+    oLines.append('Sym= a\nEne= -0.0\nSpin= Alpha\nOccup=        2.00000000000000\n')
     for i, w in enumerate(weights, start=1):
         oLines.append(f"{i:>6}    {w: .16f}\n")
     return oLines

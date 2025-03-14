@@ -16,6 +16,7 @@ from get_magnetic_dipole_from_NWChem import get_magnetic_dipole_from_NWChem
 from read_civecs import read_civecs
 from calc_moment_contrib import calc_moment_contrib
 from make_molden import make_molden
+from make_cube import make_cube
 
 # File names:
 dataFile = 'data_F_core'
@@ -25,6 +26,7 @@ civecsFile = 'civecs_2.data'
 xyzFile = 'geometry.xyz'
 templateFile = 'pbe0.molden'
 moldenFile = 'Rij_SVD_1.molden'
+multiwfnExe = '/Applications/Multiwfn_3.7_bin_Mac/Multiwfn'
 
 # Snapshots:
 dirlist = []
@@ -85,14 +87,17 @@ for d in dirlist:
     np.savetxt("Rij_torch.txt", Rij.cpu().numpy(), fmt="%.8f", delimiter=" ")
     '''
 
-    # Calculating the SVD of Rij
+    # Calculating the SVD of Rij:
     RijFile = 'Rij_2_1.txt'
     Rij = np.loadtxt(dataFile + '/' + d + '/' + RijFile)
     order = 1
     [eleOrb, magOrb] = calc_moment_contrib(Rij, order)
 
-    # Building a molden file
+    # Building a molden file:
     make_molden(dataFile + '/' + d + '/' + xyzFile, templateFile, [eleOrb, magOrb], dataFile + '/' + d + '/' + moldenFile)
+
+    # Building a cube file:
+    make_cube(multiwfnExe, dataFile + '/' + d, moldenFile)
 
     end = time.time()
     excecution_time = end - start
