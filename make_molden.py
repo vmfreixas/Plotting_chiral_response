@@ -36,7 +36,6 @@ def read_basis_block_from_template(moldenTemplate):
             if read:
                 block2.append(line)
             if '[MO]' in line:
-                block2.append('\n')
                 return block2
 
 def make_third_block(weights):

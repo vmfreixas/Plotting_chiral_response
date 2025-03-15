@@ -63,8 +63,8 @@ for d in dirlist:
     #Calculating R_ij
     print('Building dipolesT tensor')
     # With NumPy:
-    #Rij = np.einsum('ij,kl,ji,lk->ik', muxNP, mxNP, tdmNP, tdmNP) + np.einsum('ij,kl,ji,lk->ik', muyNP, myNP, tdmNP, tdmNP) + np.einsum('ij,kl,ji,lk->ik', muzNP, mzNP, tdmNP, tdmNP)
-    #np.savetxt('Rij_2_1.txt', Rij, fmt = '%.8f')
+    Rij = np.einsum('ij,kl,ji,lk->ik', muxNP, mxNP, tdmNP, tdmNP) + np.einsum('ij,kl,ji,lk->ik', muyNP, myNP, tdmNP, tdmNP) + np.einsum('ij,kl,ji,lk->ik', muzNP, mzNP, tdmNP, tdmNP)
+    np.savetxt(dataFile + '/' + d + '/Rij_2_1.txt', Rij, fmt = '%.8f')
 
     '''
     # With Torch (it takes too much RAM for Helicene):
@@ -97,6 +97,7 @@ for d in dirlist:
     make_molden(dataFile + '/' + d + '/' + xyzFile, templateFile, [eleOrb, magOrb], dataFile + '/' + d + '/' + moldenFile)
 
     # Building a cube file:
+    print('doing cubes in ' + dataFile + '/' + d)
     make_cube(multiwfnExe, dataFile + '/' + d, moldenFile)
 
     end = time.time()
