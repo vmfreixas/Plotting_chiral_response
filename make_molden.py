@@ -9,7 +9,7 @@ import numpy as np
 
 def read_xyz_make_first_molden_block(xyzFile):
     angstrom = 1.0 / 0.529177  # Conversion factor to atomic units
-    element_map = {'H': 1, 'C': 6, 'F': 9, 'Cl': 17}  # Atomic number mapping    
+    element_map = {'H': 1, 'C': 6, 'N': 7, 'O': 8, 'F': 9, 'Cl': 17}  # Atomic number mapping    
     with open(xyzFile, 'r') as xyzF:
         oLines = []
         oLines.append('[Molden Format]\n[Atoms] AU\n')

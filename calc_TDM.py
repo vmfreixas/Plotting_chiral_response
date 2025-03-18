@@ -4,8 +4,8 @@
 
 import numpy as np
 
-def calc_TDM(mo, ci1, ci2 = ''):
-    if ci2 != '':
+def calc_TDM(mo, ci1, ci2 = None):
+    if ci2 is None:
         (Nocc, Nvir) = ci1.shape
         tdmMO = np.zeros((Nocc + Nvir, Nocc + Nvir), dtype = float)
         tdmMO[:Nocc, Nocc:] = ci1

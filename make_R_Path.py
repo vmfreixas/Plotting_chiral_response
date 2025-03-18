@@ -54,7 +54,7 @@ for d in dirlist:
     ci2 = get_civecs_from_data(dataFile + '/' + d + '/' + civecsFile2, root)
 
     # Calculating TDM:
-    tdmNP = calc_TDM(mo, ci1)
+    tdmNP = calc_TDM(mo, ci1, ci2)
 
     #Reading dipoles:
     muxNP = get_electric_dipole_from_NWChem(dataFile + '/' + d + '/' + nwFile, 'x')
@@ -67,6 +67,14 @@ for d in dirlist:
     #Calculating R_ij
     print('Building dipolesT tensor')
     # With NumPy:
+    np.savetxt(dataFile + '/' + d + '/mu_x.txt', muxNP, fmt = '%.8f')
+    np.savetxt(dataFile + '/' + d + '/mu_y.txt', muyNP, fmt = '%.8f')
+    np.savetxt(dataFile + '/' + d + '/mu_z.txt', muzNP, fmt = '%.8f')
+    np.savetxt(dataFile + '/' + d + '/m_x.txt', mxNP, fmt = '%.8f')
+    np.savetxt(dataFile + '/' + d + '/m_y.txt', myNP, fmt = '%.8f')
+    np.savetxt(dataFile + '/' + d + '/m_z.txt', mzNP, fmt = '%.8f')
+    np.savetxt(dataFile + '/' + d + '/tdm.txt', tdmNP, fmt = '%.8f')
+    np.savetxt(dataFile + '/' + d + '/mo.txt', mo, fmt = '%.8f')
     Rij = np.einsum('ij,kl,ji,lk->ik', muxNP, mxNP, tdmNP, tdmNP) + np.einsum('ij,kl,ji,lk->ik', muyNP, myNP, tdmNP, tdmNP) + np.einsum('ij,kl,ji,lk->ik', muzNP, mzNP, tdmNP, tdmNP)
     np.savetxt(dataFile + '/' + d + '/Rij_2_1.txt', Rij, fmt = '%.8f')
 
