@@ -26,7 +26,7 @@ exeFile2 = 'read_civecs2.x'
 civecsFile1 = 'civecs_1.data'
 civecsFile2 = 'civecs_2.data'
 xyzFile = 'coords.xyz'
-templateFile = 'pbe0.molden'
+templateFile = 'data_Azobenzene_Path/tddft.molden'
 moldenFile = 'Rij_SVD_12.molden'
 multiwfnExe = '/Applications/Multiwfn_3.7_bin_Mac/Multiwfn'
 
@@ -55,6 +55,8 @@ for d in dirlist:
 
     # Calculating TDM:
     tdmNP = calc_TDM(mo, ci1, ci2)
+    #tdmNP = calc_TDM(mo, ci1)
+    #tdmNP = calc_TDM(mo, ci2)
 
     #Reading dipoles:
     muxNP = get_electric_dipole_from_NWChem(dataFile + '/' + d + '/' + nwFile, 'x')

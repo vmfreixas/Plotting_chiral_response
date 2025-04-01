@@ -12,7 +12,7 @@ c
 c
       ipol = 1
 c
-      filename = 'civecs1.civecs_singlet'
+      filename = 'civecs2.civecs_singlet'
 c
       call read_civecs(ipol, filename)
 c
@@ -149,7 +149,7 @@ c        Nothing needs to be done for TDA as Y is zero
            enddo
          end if
 
-         open(unit = 79, file = 'civecs_1.data')
+         open(unit = 79, file = 'civecs_2.data')
            nvir(1) = nmo(1) - nocc(1)
            do n = 1, nroots
              write(79, *) 'Root ', n
