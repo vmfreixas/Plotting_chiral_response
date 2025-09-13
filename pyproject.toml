@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "plotting-chiral-response"
+version = "0.1.0"
+description = "Utilities and notebook to plot chiral population response"
+requires-python = ">=3.10"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = []
+py-modules = ["make_Rw","complete_molden","make_cube"]

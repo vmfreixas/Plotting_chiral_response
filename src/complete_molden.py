@@ -1,12 +1,15 @@
 import numpy as np
 
-RijFile = 'Rij_2_1.txt'
-Rij = np.loadtxt(RijFile) 
-Rii = np.diag(Rij)
-with open('pbe0.molden', 'a') as mFile:
-    i = 0
-    for r in Rii:
-        i += 1
-        mFile.write('\t' + str(i) + '\t' + str(r) + '\n')
-
-    
+def complete_molden(moldenTemplate, moldenOutput, wR):
+    moldenLines = []
+    with open(moldenTemplate, 'r') as mFile:
+        for lines in mFile:
+            moldenLines.append(lines)
+            if 'Occup=' in lines:
+                break
+    with open(moldenOutput, 'w') as mFile:
+        for lines in moldenLines:
+            mFile.write(lines)
+        for i, wAO in enumerate(wR):
+            mFile.write(f"{i + 1:6d}   {wAO: .16f}\n")
+    return None

@@ -41,7 +41,4 @@ __pycache__/
 
 # Output and data files
 *.txt
-*.dat
-*.data
-*.molden
 *.out
