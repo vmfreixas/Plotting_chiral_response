@@ -1,0 +1,13 @@
+{
+  "system": "Phenylglycine",
+  "molden_template": "molden_template.molden",
+  "ao_count":  199,
+  "weights": {
+    "elec_x": "elec_x.data",
+    "elec_y": "elec_y.data",
+    "elec_z": "elec_z.data",
+    "mag_x":  "mag_x.data",
+    "mag_y":  "mag_y.data",
+    "mag_z":  "mag_z.data"
+  }
+}
