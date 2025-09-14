@@ -1,7 +1,7 @@
 ![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)
 
 # Plotting_chiral_response
-   This package calculates calculates Chiral Population Orbitals
+   This package calculates Chiral Population Orbitals
 
    The input files required are:
 - Diagonal elements of the (TDM @ integral_matrix) x6:
