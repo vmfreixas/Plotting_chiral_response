@@ -20,7 +20,7 @@
   The example corresponds to the second transition of the hydroxyl oxygen K-edge manifold of phenylglycine
 
 
-![CPA example](examples/phenylglycine_hydroxil_oxygen_K_edge_2nd/expected/orb000001.jpeg)
+![CPA example](examples/phenylglycine_hydroxyl_oxygen_K_edge_2nd/expected/orb000001.jpeg)
 
 ## How to Cite
 
