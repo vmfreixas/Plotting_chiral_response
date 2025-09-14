@@ -9,5 +9,9 @@
     "mag_x":  "mag_x.data",
     "mag_y":  "mag_y.data",
     "mag_z":  "mag_z.data"
+  },
+  "output": {
+    "molden_file": "orb000001.molden",
+    "cube file": "orb000001.cub"
   }
 }
