@@ -3,7 +3,6 @@
 # Multiwfn
 #
 
-import shutil
 import subprocess
 import os
 
@@ -11,7 +10,7 @@ def make_cube(multiwfnExe, dataFile, moldenFile):
     # Multiwfn instructions as a string (each command followed by a newline)
     # 200 # Other functions (Part 2)
     # 3   # Generate cube file for multiple orbital wavefunctions
-    # 1,2 # Input orbital index
+    # 1   # Input orbital index
     # 1   # Low quality grid
     # 1   # Output the grid data of these orbitals as separate cube files
     # 0   # Return
@@ -19,8 +18,8 @@ def make_cube(multiwfnExe, dataFile, moldenFile):
     instructions = """\
     200
     3
-    1,2
     1
+    2
     1
     0
     q
@@ -40,12 +39,6 @@ def make_cube(multiwfnExe, dataFile, moldenFile):
         text=True  # Ensures text mode (string input/output)
     )
     stdout, stderr = process.communicate(instructions)
-
-    # Print any captured output (some versions of Multiwfn may print messages)
-    #if stdout.strip():
-    #    print("Multiwfn output:", stdout)
-    #if stderr.strip():
-    #    print("Errors:", stderr)
     
     # Return to the original directory
     os.chdir(original_dir)    
@@ -57,4 +50,3 @@ dataFile = 'data_F_core/0000'
 moldenFile = 'Rij_SVD_1.molden' 
 make_cube(multiwfnExe, dataFile, moldenFile)
 '''
-
