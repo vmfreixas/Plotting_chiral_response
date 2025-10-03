@@ -24,7 +24,7 @@ def make_NWChem_Multiwfn_AO_index_permutation_matrix(moldenFile, dim = 1):
                 elif '  p  ' in line:
                     for _ in range(3):
                         count += 1
-                        ao_index.append(count)
+                        ao_index.append(-count)
                 elif '  d  ' in line:
                         ao_index.append(count + 1 + 2)
                         ao_index.append(count + 1 + 3)
